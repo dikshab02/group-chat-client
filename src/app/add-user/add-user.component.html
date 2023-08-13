@@ -1,0 +1,14 @@
+<p>add-user works!</p>
+<div>
+  <input type="text" [(ngModel)]="name" placeholder="name" />
+  <input type="password" [(ngModel)]="password" placeholder="password" />
+  <button (click)="addUser()">Add User</button>
+</div>
+
+<h2>All users</h2>
+<ul  *ngFor="let user of users">
+  <li>
+    {{ user.name }} &nbsp;
+    <button (click)="removeUser(user._id)">delete</button>
+  </li>
+</ul>

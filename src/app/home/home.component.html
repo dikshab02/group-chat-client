@@ -1,17 +1,23 @@
 <div class="main">
   <h1 class="e-card-header">Hello ! {{ userObj?.name }}</h1>
   <mat-divider></mat-divider>
-  <h2>Group name</h2>
+  <h2>Groups</h2>
   <mat-card class="chat-box-container" *ngFor="let obj of groupObj">
     <mat-card-header>
       <mat-card-title>
         {{ obj.name }}
       </mat-card-title>
+      <mat-card-subtitle>
+        <button (click)="leaveGroup(obj)">Leave Group</button>
+        <button (click)="deleteGroup(obj)">Delete Group</button>
+      </mat-card-subtitle>
     </mat-card-header>
+
     <mat-card-content class="chat-window"> Content </mat-card-content>
+
     <mat-card-footer>
-      <input type="text" class="chat-input">
-      <button>Send</button>
+      <input type="text" class="chat-input" [(ngModel)]="msg">
+      <button (click)="sendMessage(obj)">Send</button>
     </mat-card-footer>
   </mat-card>
 </div>

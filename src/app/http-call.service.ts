@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILogin } from './model/login-detail';
 import { IChatGroup } from './model/chat-group';
+import { IChatMessage } from './model/chat-message';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,22 @@ export class HttpCallService {
 
   getChatGroups(userid: string): Observable<IChatGroup[]> {
     return this.http.get<IChatGroup[]>(`${this.apiUrl}/groups/${userid}`);
+  }
+
+  leaveGroup(groupId: string, userId: string){
+    return this.http.delete<any>(`${this.apiUrl}/groups/${groupId}/users/${userId}`)
+  }
+
+  deleteGroup(groupId: string) {
+    return this.http.delete<any>(`${this.apiUrl}/groups/${groupId}`);
+  }
+
+  sendMessage(obj: IChatMessage){
+    console.log("obj",obj)
+    return this.http.post<IChatGroup>(`${this.apiUrl}/chat`, obj);
+  }
+
+  getChat(groupId: string){
+    return this.http.get<IChatMessage>(`${this.apiUrl}/groupId/${groupId}`);
   }
 }

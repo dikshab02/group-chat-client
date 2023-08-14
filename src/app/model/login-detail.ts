@@ -1,7 +1,8 @@
 export interface ILogin {
-  _id: String,
-  name: String;
-  password: String;
+
+  name: string;
+  password: string;
   isAdmin?: boolean;
+  _id?: string;
 }
 

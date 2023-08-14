@@ -4,6 +4,7 @@ import { HttpCallService } from '../http-call.service';
 import { ILogin } from '../model/login-detail';
 import { IChatGroup } from '../model/chat-group';
 import { IChatMessage } from '../model/chat-message';
+import { IChatGroupMessage } from '../model/chat-group-message';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,8 @@ import { IChatMessage } from '../model/chat-message';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  groupObj: IChatGroup[] | undefined;
+  groupObj: IChatGroupMessage[] | undefined;
   userObj: ILogin | undefined;
-  msg: string | undefined;
   constructor(
     private router: Router,
     private httpCallService: HttpCallService
@@ -32,7 +32,16 @@ export class HomeComponent implements OnInit {
 
   getChatGroups(userId: string) {
     this.httpCallService.getChatGroups(userId).subscribe((y) => {
-      this.groupObj = y;
+      this.groupObj = [];
+      for (let i=0; i < y.length; i++) {
+        const newGroupMessageObj: IChatGroupMessage = {
+          chatGroup: y[i],
+          chatMessages: [],
+          newMessage: ''
+        }
+        this.getChat(newGroupMessageObj);
+        this.groupObj.push(newGroupMessageObj)
+      }
     });
   }
 
@@ -56,13 +65,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  sendMessage(obj: IChatGroup){
-    if(this.userObj && this.msg){
+  sendMessage(obj: IChatGroupMessage){
+    if(this.userObj){
       let time = new Date();
-        let messageObj = this.convertObj(obj, this.msg, this.userObj, time);
+        let messageObj = this.convertObj(obj.chatGroup, obj.newMessage, this.userObj, time);
         this.httpCallService.sendMessage(messageObj).subscribe(res =>{
-          console.log("res",res)
+          console.log("res",res);
+          obj.newMessage = '';
+          this.getChat(obj);
+          
         })
+
     }
 
   }
@@ -77,7 +90,12 @@ export class HomeComponent implements OnInit {
       return tempObj;
   }
 
-  getChat(){
-    // this.httpCallService.getChat().subscribe()
+  getChat(chatGroupMessage: IChatGroupMessage){
+    if (!chatGroupMessage.chatGroup._id) return;
+    this.httpCallService.getChat(chatGroupMessage.chatGroup._id).subscribe((res)=>{
+      chatGroupMessage.chatMessages = res;
+    }
+
+    )
   }
 }

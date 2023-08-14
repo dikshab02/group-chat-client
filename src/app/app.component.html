@@ -1,16 +1,13 @@
 <div>
   <div class="tab"  *ngIf="httpCallService.loggedInUser">
     <button class="tablinks" routerLink="/home">Home</button>
-
-    <button class="tablinks" routerLink="/getAll">Get All User</button>
-
+    <button *ngIf="isAdmin" class="tablinks" routerLink="/getAll">Get All User</button>
     <button class="tablinks"  routerLink="/create-chat-group">Create Chat Group</button>
     <button class="tablinks" (click)="logout()" routerLink="/login">Logout</button>
 </div>
 
-<div id="Home" class="tabcontent">
+<!-- <div id="Home" class="tabcontent">
   <h3>Home</h3>
-  <p>London is the capital city of England.</p>
 </div>
 
 <div id="Get All User" class="tabcontent">
@@ -24,8 +21,5 @@
 </div>
 
 <div id="Logout" class="tabcontent">
-<!-- <div *ngIf="httpCallService.loggedInUser">
-  <button (click)="logout()">Log out</button>
 </div> -->
-</div>
 <router-outlet></router-outlet>

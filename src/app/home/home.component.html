@@ -1,22 +1,29 @@
-<div class="main">
+<div class="main" >
   <h1 class="e-card-header">Hello ! {{ userObj?.name }}</h1>
   <mat-divider></mat-divider>
   <h2>Groups</h2>
   <mat-card class="chat-box-container" *ngFor="let obj of groupObj">
     <mat-card-header>
       <mat-card-title>
-        {{ obj.name }}
+        {{ obj.chatGroup.name }}
       </mat-card-title>
       <mat-card-subtitle>
-        <button (click)="leaveGroup(obj)">Leave Group</button>
-        <button (click)="deleteGroup(obj)">Delete Group</button>
+        <button (click)="leaveGroup(obj.chatGroup)">Leave Group</button>
+        <button (click)="deleteGroup(obj.chatGroup)">Delete Group</button>
+        <button (click)="getChat(obj)">refresh</button>
       </mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content class="chat-window"> Content </mat-card-content>
+    <mat-card-content class="chat-window">
+      <ng-container  *ngFor="let msg of obj.chatMessages">
+        <td>{{msg.time | date: 'shortDate'}}</td>
+        <td> {{msg.time | date: 'shortTime'}}</td>
+        <td><b>{{msg.user.name}}</b>:  {{ msg.message}}</td><br>
+      </ng-container>
+    </mat-card-content>
 
     <mat-card-footer>
-      <input type="text" class="chat-input" [(ngModel)]="msg">
+      <input type="text" class="chat-input" [(ngModel)]="obj.newMessage">
       <button (click)="sendMessage(obj)">Send</button>
     </mat-card-footer>
   </mat-card>

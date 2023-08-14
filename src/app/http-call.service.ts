@@ -56,6 +56,6 @@ export class HttpCallService {
   }
 
   getChat(groupId: string){
-    return this.http.get<IChatMessage>(`${this.apiUrl}/groupId/${groupId}`);
+    return this.http.get<IChatMessage[]>(`${this.apiUrl}/group/${groupId}`);
   }
 }

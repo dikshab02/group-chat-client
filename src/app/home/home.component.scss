@@ -1,0 +1,24 @@
+.e-card-header {
+  font-family: cursive;
+  font-style: italic;
+  background-color: cadetblue;
+}
+.main {
+  margin: 50px;
+}
+
+.chat-box-container {
+  width: 20%;
+  display: inline-flex;
+  margin: 30px;
+  // margin-bottom: 8px;
+}
+
+.chat-window {
+  height: 150px;
+  border: solid 1px #a0a0a0;
+}
+
+.chat-input {
+  width: 80%;
+}

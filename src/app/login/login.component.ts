@@ -12,21 +12,27 @@ export class LoginComponent implements OnInit {
   name: string = '';
   password: string = '';
   constructor(private router: Router,
-    private HttpCallService: HttpCallService){}
+    private httpCallService: HttpCallService){}
 
   ngOnInit(){}
 
   login(){
+
     const credentials ={
       name : this.name,
       password: this.password
     };
 
-    this.HttpCallService.login(credentials).subscribe(response => {
+    this.httpCallService.login(credentials).subscribe(response => {
       console.log('Logged in:', response);
       localStorage.setItem('loggedInUser', JSON.stringify(response));
+      this.httpCallService.loggedInUser = true;
       this.router.navigate(['home']);
     })
+  }
+
+  signup(){
+    this.router.navigate(['signup'])
   }
 
 }

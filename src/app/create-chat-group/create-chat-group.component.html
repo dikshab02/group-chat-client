@@ -1,0 +1,53 @@
+<!-- <p>create-chat-group works!</p> -->
+<div  class="main">
+  <h1 class="e-card-header">Chat Group</h1>
+  <mat-divider></mat-divider>
+  <form [formGroup]="userForm" *ngIf="userForm">
+    <div class="e-card">
+      <mat-form-field class="row">
+        <mat-label>Name:</mat-label>
+        <input
+          matInput
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Enter a name"
+        /> </mat-form-field
+      ><br />
+
+      <mat-form-field class="row">
+        <label>User Search:</label>
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          formControlName="selectedUser"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of users"
+            (click)="selectedValue(option)"
+            [value]="option"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="e-card-content">
+        <label>Selected Users:</label>
+        <ul>
+          <li *ngFor="let user of this.selectedUsers; let i = index">
+            {{ user.name }} &nbsp;
+            <span *ngIf="i > 0">
+              <button (click)="removeSelectedUser(user._id)">delete</button>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <button (click)="saveSelectedUser()">Save</button>
+    </div>
+  </form>
+</div>

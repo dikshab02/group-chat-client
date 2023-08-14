@@ -6,7 +6,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { HttpCallService } from './http-call.service';
 
 @Injectable({
   providedIn: 'root',

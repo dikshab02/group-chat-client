@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILogin } from './model/login-detail';
+import { IChatGroup } from './model/chat-group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpCallService {
   private apiUrl = 'http://localhost:3000';
+  loggedInUser: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -27,4 +29,15 @@ export class HttpCallService {
     return this.http.delete<any>(`${this.apiUrl}/delete/${userid}`);
   }
 
+  searchUser(username: string): Observable<ILogin[]> {
+    return this.http.post<ILogin[]>(`${this.apiUrl}/search-user`, {name:username});
+  }
+
+  saveChatGroup(chatGroup: IChatGroup){
+    return this.http.post<IChatGroup>(`${this.apiUrl}/create-chat-group`, {chatGroup: chatGroup});
+  }
+
+  getChatGroups(userid: string): Observable<IChatGroup[]> {
+    return this.http.get<IChatGroup[]>(`${this.apiUrl}/groups/${userid}`);
+  }
 }

@@ -1,8 +1,16 @@
-<p>login works!</p>
-<div>
+<div  style="margin: 50px;">
+  <div tabindex="0" class="e-card">
+    <h1 class="e-card-header">Login your page..</h1>
+  </div>
 
-  <input type="text" [(ngModel)]="name" placeholder="name">
-  <input type="password" [(ngModel)]="password" placeholder="password">
-  <button (click)="login()">Login</button>
+  <div  tabindex="0" class="e-card">
+    <input class="e-card-content" type="text" [(ngModel)]="name" placeholder="name" /> &nbsp;
+    <input class="e-card-content" type="password" [(ngModel)]="password" placeholder="password" />
+    &nbsp;
+    <button (click)="login()">Login</button>
+  </div>
+  <div class="content">
 
+    <button (click)="signup()">Sign up</button>
+  </div>
 </div>

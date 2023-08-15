@@ -43,6 +43,11 @@ const routes: Routes = [
     canActivate: [isLoggedInService]
   },
   {
+    path: 'edit-chat-group/:groupId',
+    component: CreateChatGroupComponent,
+    canActivate: [isLoggedInService]
+  },
+  {
     path: '*',
     redirectTo: 'login',
     pathMatch: 'full'

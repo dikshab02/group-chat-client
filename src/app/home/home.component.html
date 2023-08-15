@@ -1,30 +1,67 @@
-<div class="main" >
+<div class="main">
   <h1 class="e-card-header">Hello ! {{ userObj?.name }}</h1>
   <mat-divider></mat-divider>
-  <h2>Groups</h2>
   <mat-card class="chat-box-container" *ngFor="let obj of groupObj">
     <mat-card-header>
       <mat-card-title>
-        {{ obj.chatGroup.name }}
+        <table class="group-title">
+          <tr>
+            <td>
+            {{
+              obj.chatGroup.name
+            }}
+          </td>
+          <td align="end">
+            <button mat-icon-button (click)="deleteGroup(obj.chatGroup)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button (click)="editGroup(obj.chatGroup)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="getChat(obj)">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon [matBadge]="obj.chatGroup.users.length">group</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <div mat-menu-item *ngFor="let user of obj.chatGroup.users">
+                <span>{{ user.name }}</span>
+              </div>
+            </mat-menu>
+          </td>
+          </tr>
+        </table>
       </mat-card-title>
       <mat-card-subtitle>
         <button (click)="leaveGroup(obj.chatGroup)">Leave Group</button>
-        <button (click)="deleteGroup(obj.chatGroup)">Delete Group</button>
-        <button (click)="getChat(obj)">refresh</button>
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="chat-window">
-      <ng-container  *ngFor="let msg of obj.chatMessages">
-        <td>{{msg.time | date: 'shortDate'}}</td>
-        <td> {{msg.time | date: 'shortTime'}}</td>
-        <td><b>{{msg.user.name}}</b>:  {{ msg.message}}</td><br>
-      </ng-container>
+      <table [cellSpacing]="0" class="message-list-container">
+        <ng-container *ngFor="let msg of obj.chatMessages">
+          <tr>
+            <td class="chat-message-time">
+              {{ msg.time | date : "shortDate" }} -
+              {{ msg.time | date : "shortTime" }}
+            </td>
+            <td class="chat-message-time" align="end">{{ msg.user.name }}</td>
+          </tr>
+          <tr>
+            <td class="chat-message" colspan="2">
+              {{ msg.message }}
+            </td>
+          </tr>
+        </ng-container>
+      </table>
     </mat-card-content>
 
     <mat-card-footer>
-      <input type="text" class="chat-input" [(ngModel)]="obj.newMessage">
-      <button (click)="sendMessage(obj)">Send</button>
+      <input type="text" class="chat-input" [(ngModel)]="obj.newMessage" />
+      <button (click)="sendMessage(obj)" class="message-send-button">
+        Send
+      </button>
     </mat-card-footer>
   </mat-card>
 </div>

@@ -1,5 +1,5 @@
 <div class="main">
-  <h1 class="e-card-header">ADD User..!!</h1>
+  <h1 class="e-card-header">Add User..!!</h1>
   <mat-divider></mat-divider>
   <div class="addUserContent1">
     <input type="text" [(ngModel)]="name" placeholder="name" />
@@ -11,7 +11,10 @@
     <ul *ngFor="let user of users">
       <li>
         {{ user.name }} &nbsp;
-        <button (click)="removeUser(user._id)">delete</button>
+        <button (click)="removeUser(user._id?user._id:'')"><mat-icon>delete</mat-icon></button>
+        <button (click)="editUser(user._id?user._id:'')">
+          <mat-icon>edit</mat-icon>
+        </button>
       </li>
     </ul>
   </div>

@@ -12,6 +12,7 @@ export class AddUserComponent implements OnInit {
   users: ILogin[] = [];
   name: string = '';
   password: string = '';
+  newName: string | null = '';
 
   constructor(private HttpCallService: HttpCallService, private router: Router) {}
 
@@ -25,11 +26,20 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  removeUser(userid: any) {
+  removeUser(userid: string) {
     this.HttpCallService
       .deleteUser(userid)
       .subscribe((del) => console.log('deleted', del));
     this.fetchUsers();
+  }
+
+  editUser(userid: string){
+    this.newName = prompt();
+    if(this.newName)
+      this.HttpCallService.editUser(userid, this.newName).subscribe((res)=>{
+        console.log("res->",res)
+        this.fetchUsers();
+      });
   }
 
   addUser() {

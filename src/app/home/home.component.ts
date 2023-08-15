@@ -22,8 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     let username = localStorage.getItem('loggedInUser');
     if (username) this.userObj = JSON.parse(username);
-    if(this.userObj?._id)
-    this.getChatGroups(this.userObj._id);
+    if (this.userObj?._id) this.getChatGroups(this.userObj._id);
   }
 
   userList() {
@@ -33,69 +32,71 @@ export class HomeComponent implements OnInit {
   getChatGroups(userId: string) {
     this.httpCallService.getChatGroups(userId).subscribe((y) => {
       this.groupObj = [];
-      for (let i=0; i < y.length; i++) {
+      for (let i = 0; i < y.length; i++) {
         const newGroupMessageObj: IChatGroupMessage = {
           chatGroup: y[i],
           chatMessages: [],
-          newMessage: ''
-        }
+          newMessage: '',
+        };
         this.getChat(newGroupMessageObj);
-        this.groupObj.push(newGroupMessageObj)
+        this.groupObj.push(newGroupMessageObj);
       }
     });
   }
 
   leaveGroup(obj: IChatGroup) {
-    obj.users.forEach((user: ILogin) => {
-      if(obj._id && user._id)
-      this.httpCallService.leaveGroup(obj._id, user._id).subscribe(() => {
-        if(user._id)
-        this.getChatGroups(user._id);
-      });
-    });
+    if (obj._id && this.userObj?._id)
+      this.httpCallService
+        .leaveGroup(obj._id, this.userObj._id)
+        .subscribe(() => {
+          if (this.userObj?._id) this.getChatGroups(this.userObj._id);
+        });
   }
 
   deleteGroup(obj: IChatGroup) {
-    obj.users.forEach((user: ILogin) => {
-      if(obj._id)
+    if (obj._id)
       this.httpCallService.deleteGroup(obj._id).subscribe(() => {
-        if(user._id)
-        this.getChatGroups(user._id);
+        if (this.userObj?._id) this.getChatGroups(this.userObj._id);
       });
-    });
   }
 
-  sendMessage(obj: IChatGroupMessage){
-    if(this.userObj){
+  editGroup(obj: IChatGroup) {
+    this.router.navigate(['edit-chat-group/' + obj._id]);
+  }
+
+  sendMessage(obj: IChatGroupMessage) {
+    if (this.userObj) {
       let time = new Date();
-        let messageObj = this.convertObj(obj.chatGroup, obj.newMessage, this.userObj, time);
-        this.httpCallService.sendMessage(messageObj).subscribe(res =>{
-          console.log("res",res);
-          obj.newMessage = '';
-          this.getChat(obj);
-          
-        })
-
+      let messageObj = this.convertObj(
+        obj.chatGroup,
+        obj.newMessage,
+        this.userObj,
+        time
+      );
+      this.httpCallService.sendMessage(messageObj).subscribe((res) => {
+        console.log('res', res);
+        obj.newMessage = '';
+        this.getChat(obj);
+      });
     }
-
   }
 
-  convertObj(obj: IChatGroup, msg:string, userObj: ILogin, time: Date){
-      const tempObj: IChatMessage = {
-        chatGrpId: obj._id? obj._id:'',
-        user: userObj,
-        time: time,
-        message: msg,
-      }
-      return tempObj;
+  convertObj(obj: IChatGroup, msg: string, userObj: ILogin, time: Date) {
+    const tempObj: IChatMessage = {
+      chatGrpId: obj._id ? obj._id : '',
+      user: userObj,
+      time: time,
+      message: msg,
+    };
+    return tempObj;
   }
 
-  getChat(chatGroupMessage: IChatGroupMessage){
+  getChat(chatGroupMessage: IChatGroupMessage) {
     if (!chatGroupMessage.chatGroup._id) return;
-    this.httpCallService.getChat(chatGroupMessage.chatGroup._id).subscribe((res)=>{
-      chatGroupMessage.chatMessages = res;
-    }
-
-    )
+    this.httpCallService
+      .getChatMessage(chatGroupMessage.chatGroup._id)
+      .subscribe((res) => {
+        chatGroupMessage.chatMessages = res;
+      });
   }
 }

@@ -1,25 +1,14 @@
-<div>
-  <div class="tab"  *ngIf="httpCallService.loggedInUser">
-    <button class="tablinks" routerLink="/home">Home</button>
-    <button *ngIf="isAdmin" class="tablinks" routerLink="/getAll">Get All User</button>
-    <button class="tablinks"  routerLink="/create-chat-group">Create Chat Group</button>
-    <button class="tablinks" (click)="logout()" routerLink="/login">Logout</button>
+<div class="tab" *ngIf="httpCallService.loggedInUser">
+  <button class="tablinks" routerLink="/home">Home</button>
+  <button *ngIf="httpCallService.isAdmin" class="tablinks" routerLink="/getAll">
+    All User
+  </button>
+  <button class="tablinks" routerLink="/create-chat-group">
+    Create Chat Group
+  </button>
+  <button class="tablinks" (click)="logout()" routerLink="/login">
+    Logout
+  </button>
 </div>
 
-<!-- <div id="Home" class="tabcontent">
-  <h3>Home</h3>
-</div>
-
-<div id="Get All User" class="tabcontent">
-  <h3>Get All User</h3>
-  <p>Paris is the capital of France.</p>
-</div>
-
-<div id="Create Chat Group" class="tabcontent">
-  <h3>Create Chat Group</h3>
-  <p>Tokyo is the capital of Japan.</p>
-</div>
-
-<div id="Logout" class="tabcontent">
-</div> -->
 <router-outlet></router-outlet>

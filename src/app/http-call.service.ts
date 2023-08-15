@@ -11,6 +11,7 @@ import { IChatMessage } from './model/chat-message';
 export class HttpCallService {
   private apiUrl = 'http://localhost:3000';
   loggedInUser: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +27,7 @@ export class HttpCallService {
     return this.http.get<any>(`${this.apiUrl}/getAll`);
   }
 
-  deleteUser(userid: any){
+  deleteUser(userid: string){
     return this.http.delete<any>(`${this.apiUrl}/delete/${userid}`);
   }
 
@@ -55,7 +56,19 @@ export class HttpCallService {
     return this.http.post<IChatGroup>(`${this.apiUrl}/chat`, obj);
   }
 
-  getChat(groupId: string){
-    return this.http.get<IChatMessage[]>(`${this.apiUrl}/group/${groupId}`);
+  getChatMessage(groupId: string){
+    return this.http.get<IChatMessage[]>(`${this.apiUrl}/message/${groupId}`);
+  }
+
+  getChatGroupDetails(groupId: string): Observable<IChatGroup> {
+    return this.http.get<IChatGroup>(`${this.apiUrl}/group/${groupId}`);
+  }
+
+  editUser(userId: string, newName: string)  {
+    return this.http.put<ILogin>(`${this.apiUrl}/users/${userId}`, {newName: newName});
+  }
+
+  updateGrpName(chatGroup: IChatGroup, groupId: string)  {
+    return this.http.put<IChatGroup>(`${this.apiUrl}/group/${groupId}`, {chatGroup: chatGroup});
   }
 }

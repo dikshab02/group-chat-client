@@ -11,7 +11,6 @@ import { ILogin } from './model/login-detail';
 export class AppComponent implements OnInit {
   user:ILogin | undefined;
   title = 'new-app';
-  isAdmin: boolean | undefined = false;
 
 
   constructor(
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit {
     let userdetail = localStorage.getItem('loggedInUser');
     if (userdetail) this.user = JSON.parse(userdetail);
     if(this.user?.isAdmin)
-      this.isAdmin = this.user?.isAdmin;
+      this.httpCallService.isAdmin = this.user?.isAdmin;
     if(localStorage.getItem('loggedInUser'))
     this.httpCallService.loggedInUser = true;
   }

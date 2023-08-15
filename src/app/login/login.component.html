@@ -1,16 +1,39 @@
-<div  style="margin: 50px;">
-  <div tabindex="0" class="e-card">
-    <h1 class="e-card-header">Login your page..</h1>
-  </div>
+<table class="login-container-table">
+<tr class="login-container-row">
+  <td class="login-container-cell">
 
-  <div  tabindex="0" class="e-card">
-    <input class="e-card-content" type="text" [(ngModel)]="name" placeholder="name" /> &nbsp;
-    <input class="e-card-content" type="password" [(ngModel)]="password" placeholder="password" />
-    &nbsp;
-    <button (click)="login()">Login</button>
-  </div>
-  <div class="content">
 
-    <button (click)="signup()">Sign up</button>
-  </div>
-</div>
+    <table class="login-table" [cellSpacing]="10">
+      <tr>
+        <th>
+          <h1>LOGIN</h1>
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input
+          type="text"
+          [(ngModel)]="name"
+          placeholder="name"
+        />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="password"
+        />
+        </td>
+      </tr>
+      <tr>
+        <td align="end">
+          <button (click)="login()" class="login-button">Login</button>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>
+</table>

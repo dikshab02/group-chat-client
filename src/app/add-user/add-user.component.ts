@@ -50,6 +50,7 @@ export class AddUserComponent implements OnInit {
 
     this.HttpCallService.signup(credentials).subscribe((response) => {
       this.router.navigate(['']);
+      this.fetchUsers();
     });
   }
 }

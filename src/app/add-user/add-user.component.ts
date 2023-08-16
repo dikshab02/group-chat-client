@@ -14,7 +14,10 @@ export class AddUserComponent implements OnInit {
   password: string = '';
   newName: string | null = '';
 
-  constructor(private HttpCallService: HttpCallService, private router: Router) {}
+  constructor(
+    private HttpCallService: HttpCallService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.fetchUsers();
@@ -27,17 +30,16 @@ export class AddUserComponent implements OnInit {
   }
 
   removeUser(userid: string) {
-    this.HttpCallService
-      .deleteUser(userid)
-      .subscribe((del) => console.log('deleted', del));
-    this.fetchUsers();
+    this.HttpCallService.deleteUser(userid).subscribe((del) =>
+      this.fetchUsers()
+    );
   }
 
-  editUser(userid: string){
+  editUser(userid: string) {
     this.newName = prompt();
-    if(this.newName)
-      this.HttpCallService.editUser(userid, this.newName).subscribe((res)=>{
-        console.log("res->",res)
+    if (this.newName)
+      this.HttpCallService.editUser(userid, this.newName).subscribe((res) => {
+        console.log('res->', res);
         this.fetchUsers();
       });
   }
@@ -51,6 +53,8 @@ export class AddUserComponent implements OnInit {
     this.HttpCallService.signup(credentials).subscribe((response) => {
       this.router.navigate(['']);
       this.fetchUsers();
+      this.name = '';
+      this.password = '';
     });
   }
 }

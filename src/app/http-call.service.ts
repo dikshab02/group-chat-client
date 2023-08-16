@@ -36,7 +36,7 @@ export class HttpCallService {
   }
 
   saveChatGroup(chatGroup: IChatGroup){
-    return this.http.post<IChatGroup>(`${this.apiUrl}/create-chat-group`, {chatGroup: chatGroup});
+    return this.http.post<any>(`${this.apiUrl}/create-chat-group`, {chatGroup: chatGroup});
   }
 
   getChatGroups(userid: string): Observable<IChatGroup[]> {
@@ -68,7 +68,7 @@ export class HttpCallService {
     return this.http.put<ILogin>(`${this.apiUrl}/users/${userId}`, {newName: newName});
   }
 
-  updateGrpName(chatGroup: IChatGroup, groupId: string)  {
-    return this.http.put<IChatGroup>(`${this.apiUrl}/group/${groupId}`, {chatGroup: chatGroup});
+  updateGrpDetails(chatGroup: IChatGroup, groupId: string)  {
+    return this.http.put<any>(`${this.apiUrl}/group/${groupId}`, {chatGroup: chatGroup});
   }
 }

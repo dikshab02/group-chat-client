@@ -74,22 +74,23 @@ export class CreateChatGroupComponent implements OnInit {
     };
     if (!this.grp_id) {
       this.httpcallService.saveChatGroup(chatGroup).subscribe((save) => {
-        console.log('saved')
+        console.log('saved');
         this.router.navigate(['home']);
       });
     } else {
-      this.httpcallService.updateGrpName(chatGroup,this.grp_id).subscribe();
-      console.log('updated')
-      this.router.navigate(['home']);
+      this.httpcallService
+        .updateGrpDetails(chatGroup, this.grp_id)
+        .subscribe((updated) => {
+          console.log('updated');
+          this.router.navigate(['home']);
+        });
     }
-
   }
 
   loadChatGroup() {
     if (!this.grp_id) return;
 
     this.httpcallService.getChatGroupDetails(this.grp_id).subscribe((res) => {
-      console.log('res->', res);
       this.userForm?.controls['name'].setValue(res.name);
       this.selectedUsers = res.users;
     });

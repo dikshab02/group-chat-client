@@ -1,6 +1,6 @@
 #Demo Video
 
-[![Watch the video](https://img.youtube.com/vi/rkOEXcmc3gE/hqdefault.jpg)](https://www.youtube.com/watch?v=rkOEXcmc3gE&t=1s)
+[![Watch the video](https://img.youtube.com/vi/rkOEXcmc3gE/hqdefault.jpg)](https://youtu.be/rkOEXcmc3gE)
 
 # NewApp
 

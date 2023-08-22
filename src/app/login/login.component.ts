@@ -24,10 +24,9 @@ export class LoginComponent implements OnInit {
     };
 
     this.httpCallService.login(credentials).subscribe(response => {
-      console.log('Logged in:', response);
-      localStorage.setItem('loggedInUser', JSON.stringify(response));
+      localStorage.setItem('loggedInUser', JSON.stringify(response.data));
       this.httpCallService.loggedInUser = true;
-      this.httpCallService.isAdmin = response.isAdmin ? true : false;
+      this.httpCallService.isAdmin = response.data.isAdmin ? true : false;
       this.router.navigate(['home']);
     })
   }

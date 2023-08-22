@@ -25,7 +25,7 @@ export class AddUserComponent implements OnInit {
 
   fetchUsers() {
     this.HttpCallService.getAll().subscribe((response) => {
-      this.users = response;
+      this.users = response.data;
     });
   }
 
@@ -39,7 +39,6 @@ export class AddUserComponent implements OnInit {
     this.newName = prompt();
     if (this.newName)
       this.HttpCallService.editUser(userid, this.newName).subscribe((res) => {
-        console.log('res->', res);
         this.fetchUsers();
       });
   }

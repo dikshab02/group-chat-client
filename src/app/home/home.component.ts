@@ -30,11 +30,11 @@ export class HomeComponent implements OnInit {
   }
 
   getChatGroups(userId: string) {
-    this.httpCallService.getChatGroups(userId).subscribe((y) => {
+    this.httpCallService.getChatGroups(userId).subscribe((response) => {
       this.groupObj = [];
-      for (let i = 0; i < y.length; i++) {
+      for (let i = 0; i < response.data.length; i++) {
         const newGroupMessageObj: IChatGroupMessage = {
-          chatGroup: y[i],
+          chatGroup: response.data[i],
           chatMessages: [],
           newMessage: '',
         };
@@ -74,7 +74,6 @@ export class HomeComponent implements OnInit {
         time
       );
       this.httpCallService.sendMessage(messageObj).subscribe((res) => {
-        console.log('res', res);
         obj.newMessage = '';
         this.getChat(obj);
       });
@@ -96,7 +95,7 @@ export class HomeComponent implements OnInit {
     this.httpCallService
       .getChatMessage(chatGroupMessage.chatGroup._id)
       .subscribe((res) => {
-        chatGroupMessage.chatMessages = res;
+        chatGroupMessage.chatMessages = res.data;
       });
   }
 }

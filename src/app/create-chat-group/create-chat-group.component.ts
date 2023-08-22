@@ -51,8 +51,8 @@ export class CreateChatGroupComponent implements OnInit {
   }
 
   searchUser(name: string) {
-    this.httpcallService.searchUser(name).subscribe((s) => {
-      this.users = s;
+    this.httpcallService.searchUser(name).subscribe((response) => {
+      this.users = response.data;
     });
   }
 
@@ -74,14 +74,12 @@ export class CreateChatGroupComponent implements OnInit {
     };
     if (!this.grp_id) {
       this.httpcallService.saveChatGroup(chatGroup).subscribe((save) => {
-        console.log('saved');
         this.router.navigate(['home']);
       });
     } else {
       this.httpcallService
         .updateGrpDetails(chatGroup, this.grp_id)
         .subscribe((updated) => {
-          console.log('updated');
           this.router.navigate(['home']);
         });
     }
@@ -91,8 +89,8 @@ export class CreateChatGroupComponent implements OnInit {
     if (!this.grp_id) return;
 
     this.httpcallService.getChatGroupDetails(this.grp_id).subscribe((res) => {
-      this.userForm?.controls['name'].setValue(res.name);
-      this.selectedUsers = res.users;
+      this.userForm?.controls['name'].setValue(res.data.name);
+      this.selectedUsers = res.data.users;
     });
   }
 }

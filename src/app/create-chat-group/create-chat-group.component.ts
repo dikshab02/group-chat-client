@@ -31,7 +31,6 @@ export class CreateChatGroupComponent implements OnInit {
     const selectedUserName = localStorage.getItem('loggedInUser');
     if (selectedUserName) {
       this.selectedUsers.push(JSON.parse(selectedUserName));
-      console.log('q->', this.selectedUsers);
     }
 
     this.userForm = this.fb.group({
@@ -57,7 +56,6 @@ export class CreateChatGroupComponent implements OnInit {
   }
 
   selectedValue(option: ILogin) {
-    console.log('option', option);
     this.selectedUsers.push(option);
     this.userForm?.controls['selectedUser'].setValue('');
   }

@@ -22,7 +22,6 @@ export class SignupComponent {
     };
 
     this.HttpCallService.signup(credentials).subscribe(response => {
-        console.log('Sign up:', response);
         this.router.navigate(['login']);
       }
     );

@@ -71,4 +71,9 @@ export class HttpCallService {
   updateGrpDetails(chatGroup: IChatGroup, groupId: string): Observable<ServerResponse<string>>  {
     return this.http.put<ServerResponse<string>>(`${this.apiUrl}/group/${groupId}`, {chatGroup: chatGroup});
   }
+
+  likeChatMessage(messageId: string, userId:string) {
+    console.log("messageId",messageId,"userId",userId)
+    return this.http.put<any>(`${this.apiUrl}/message/like/${messageId}`,{userId: userId} );
+  }
 }

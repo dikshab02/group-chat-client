@@ -7,5 +7,6 @@ export interface IChatMessage {
     time: Date;
     message: string;
     _id?: string;
+    likedByUsers?: string[];
 }
 

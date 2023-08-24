@@ -98,4 +98,19 @@ export class HomeComponent implements OnInit {
         chatGroupMessage.chatMessages = res.data;
       });
   }
+
+  likeChatMessage(chatMessage: IChatMessage) {
+    console.log('chatMessage', chatMessage);
+    if (chatMessage._id && this.userObj?._id) {
+      this.httpCallService
+        .likeChatMessage(chatMessage._id, this.userObj._id)
+        .subscribe((response) => {
+          if (this.userObj?._id) {
+            const index = chatMessage.likedByUsers?.indexOf(this.userObj?._id);
+            if (index != undefined && index >= 0) chatMessage.likedByUsers?.splice(index, 1)
+            else chatMessage.likedByUsers?.push(this.userObj._id)
+          }
+        });
+    }
+  }
 }
